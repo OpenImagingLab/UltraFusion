@@ -16,7 +16,7 @@ from torchvision.transforms import ToTensor, ToPILImage
 # auth_token = os.getenv("ModelAccessToken")
 # from huggingface_hub import hf_hub_download, snapshot_download
 # model_folder = snapshot_download(repo_id=model_name, token=auth_token, local_dir="/home/user/app")
-base_path = '/home/xlab-app-center'
+base_path = '/home/xlab-app-center/UltraFusionModel'
 # download repo to the base_path directory using git
 print(os.system('pwd'))
 # os.system('apt install git')
@@ -25,6 +25,7 @@ auth_token = os.getenv("ModelAccessToken")
 # please replace "your_git_token" with real token
 os.system(f'git clone https://OpenImagingLab:{auth_token}@code.openxlab.org.cn/OpenImagingLab/UltraFusionModel.git {base_path}')
 os.system(f'cd {base_path} && git lfs pull')
+os.system(f'mv {base_path}/* ./')
 print(os.system('pwd'))
 print(os.system('ls'))
 
