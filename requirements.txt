@@ -2,7 +2,6 @@ accelerate
 diffusers
 invisible_watermark
 transformers
-xformers
 omegaconf
 numpy
 pillow
@@ -10,6 +9,4 @@ einops
 scipy
 numpy
 ftfy
-torch==2.4.1
-torchvision==0.19.1
 pytorch_lightning==2.4
