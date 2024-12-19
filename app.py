@@ -19,8 +19,8 @@ from torchvision.transforms import ToTensor, ToPILImage
 base_path = '/home/xlab-app-center'
 # download repo to the base_path directory using git
 print(os.system('pwd'))
-os.system('apt install git')
-os.system('apt install git-lfs')
+# os.system('apt install git')
+# os.system('apt install git-lfs')
 auth_token = os.getenv("ModelAccessToken")
 # please replace "your_git_token" with real token
 os.system(f'git clone https://OpenImagingLab:{auth_token}@code.openxlab.org.cn/OpenImagingLab/UltraFusionModel.git {base_path}')
