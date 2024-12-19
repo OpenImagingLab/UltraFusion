@@ -4,21 +4,28 @@ import sys
 import gradio as gr
 import numpy as np
 import random
-import spaces #[uncomment to use ZeroGPU]
+# import spaces #[uncomment to use ZeroGPU]
 # from diffusers import DiffusionPipeline
 import torch
 from torchvision.transforms import ToTensor, ToPILImage
-import logging
+# import logging
 # logging.getLogger("huggingface_hub").setLevel(logging.CRITICAL)
-from huggingface_hub import hf_hub_download, snapshot_download
 
-model_name = "iimmortall/UltraFusion"
-auth_token = os.getenv("HF_AUTH_TOKEN")
-# greet_file = hf_hub_download(repo_id=model_name, filename="main.py", use_auth_token=auth_token) 
-# sys.path.append(os.path.split(greet_file)[0])  
-model_folder = snapshot_download(repo_id=model_name, token=auth_token, local_dir="/home/user/app")
-# sys.path.append(model_folder)
-# sys.path.insert(0, model_folder)
+
+# model_name = "iimmortall/UltraFusion"
+# auth_token = os.getenv("ModelAccessToken")
+# from huggingface_hub import hf_hub_download, snapshot_download
+# model_folder = snapshot_download(repo_id=model_name, token=auth_token, local_dir="/home/user/app")
+base_path = '/home/xlab-app-center'
+# download repo to the base_path directory using git
+print(os.system('pwd'))
+os.system('apt install git')
+os.system('apt install git-lfs')
+auth_token = os.getenv("ModelAccessToken")
+# please replace "your_git_token" with real token
+os.system(f'git clone https://OpenImagingLab:{auth_token}@code.openxlab.org.cn/OpenImagingLab/UltraFusionModel.git {base_path}')
+os.system(f'cd {base_path} && git lfs pull')
+
 # print(sys.path)
 
 from ultrafusion_utils import load_model, run_ultrafusion, check_input
@@ -37,7 +44,7 @@ else:
 MAX_SEED = np.iinfo(np.int32).max
 MAX_IMAGE_SIZE = 1024
 
-@spaces.GPU(duration=60) #[uncomment to use ZeroGPU]
+# @spaces.GPU(duration=60) #[uncomment to use ZeroGPU]
 def infer(
     under_expo_img,
     over_expo_img,
