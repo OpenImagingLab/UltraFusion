@@ -25,6 +25,8 @@ auth_token = os.getenv("ModelAccessToken")
 # please replace "your_git_token" with real token
 os.system(f'git clone https://OpenImagingLab:{auth_token}@code.openxlab.org.cn/OpenImagingLab/UltraFusionModel.git {base_path}')
 os.system(f'cd {base_path} && git lfs pull')
+print(os.system('pwd'))
+print(os.system('ls'))
 
 # print(sys.path)
 
