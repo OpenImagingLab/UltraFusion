@@ -1,4 +1,3 @@
-gradio==4.44.1
 accelerate
 diffusers
 invisible_watermark
