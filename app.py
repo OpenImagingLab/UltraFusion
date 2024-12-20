@@ -63,6 +63,13 @@ def infer(
     ue = to_tensor(under_expo_img).unsqueeze(dim=0).to("cuda")
     oe = to_tensor(over_expo_img).unsqueeze(dim=0).to("cuda")
     print("num_inference_steps:", num_inference_steps)
+    if num_inference_steps is None:
+        num_inference_steps = 20
+    try:
+        num_inference_steps = int(num_inference_steps)
+    except Exception:
+        num_inference_steps = 20
+        
     out = run_ultrafusion(ue, oe, 'test', flow_model=flow_model, pipe=ultrafusion_pipe, steps=num_inference_steps, consistent_start=None)
 
     out = out.clamp(0, 1).squeeze()
