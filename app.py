@@ -134,17 +134,17 @@ def build_demo():
 
     with gr.Blocks(css=css) as demo:
         with gr.Column(elem_id="col-container"):
-            gr.Markdown("""<h1 style="text-align: center; font-size: 32px;"><b>UltraFusion📸✨</b></h1>""")
-            gr.Markdown("""<h1 style="text-align: center; font-size: 24px;"><b>如何拍摄长短曝光的图片呢？</b></h1>""")
+            gr.Markdown("""<h1 style="text-align: center; font-size: 32px;"><b>浦像•超级HDR📸✨</b></h1>""")
+            gr.Markdown("""<h1 style="text-align: center; font-size: 24px;"><b>该如何使用它呢？</b></h1>""")
             with gr.Row():
-                gr.Image("ui/ch-short.png", width=IMG_W*2//3, show_label=False, interactive=False, show_download_button=False) #, height=IMG_H*2
-                gr.Image("ui/ch-tap.png", width=IMG_W*2//3, show_label=False, interactive=False, show_download_button=False)
-                gr.Image("ui/ch-long.png", width=IMG_W*2//3, show_label=False, interactive=False, show_download_button=False)
+                gr.Image("ui/ch-short.png", width=IMG_W//3, show_label=False, interactive=False, show_download_button=False)
+                gr.Image("ui/ch-long.png", width=IMG_W//3, show_label=False, interactive=False, show_download_button=False)
+                gr.Image("ui/ch-run.png", width=IMG_W//3, show_label=False, interactive=False, show_download_button=False)
             
             with gr.Row():
-                gr.Markdown("""<h1 style="text-align: center; font-size: 12px;"><b>➁ 向下拖动☀︎图标拍摄短曝光的图。</b></h1>""")
-                gr.Markdown("""<h1 style="text-align: center; font-size: 12px;"><b>➀ 点击屏幕出现调节曝光的图标☀︎。</b></h1>""")
-                gr.Markdown("""<h1 style="text-align: center; font-size: 12px;"><b>➂ 向上拖动☀︎图标拍摄长曝光的图。</b></h1>""")
+                gr.Markdown("""<h1 style="text-align: center; font-size: 12px;"><b>➀ 点击拍照界面，向下拖动☀︎图标，拍摄短曝光照片。</b></h1>""")
+                gr.Markdown("""<h1 style="text-align: center; font-size: 12px;"><b>➁ 点击拍照界面，向上拖动☀︎图标，拍摄长曝光照片。</b></h1>""")
+                gr.Markdown("""<h1 style="text-align: center; font-size: 12px;"><b>➂ 上传拍摄的短曝光和长曝光照片，随后点击“运行”按钮，获取处理后的结果。</b></h1>""")
 
             gr.Markdown("""<h1 style="text-align: center; font-size: 24px;"><b>开始体验它吧!</b></h1>""")
             with gr.Row():
