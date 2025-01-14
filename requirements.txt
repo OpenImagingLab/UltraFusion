@@ -10,3 +10,4 @@ scipy
 numpy
 ftfy
 pytorch_lightning==2.4
+pycuda
