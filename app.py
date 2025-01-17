@@ -21,6 +21,12 @@ print(os.system('pwd'))
 print(os.system('ls'))
 
 from ultrafusion_utils import load_model, run_ultrafusion, check_input
+PYCUDA_FLAG = True
+try :
+    import pycuda
+except Exception:
+    PYCUDA_FLAG = False
+    print("No pycuda!!!")
 
 RUN_TIMES = 0
 
@@ -46,7 +52,12 @@ def infer(
     print(under_expo_img.size)
     print("reciving image")
     
-    under_expo_img_lr, over_expo_img_lr, under_expo_img, over_expo_img, use_bgu = check_input(under_expo_img, over_expo_img, max_l=1500, test_bs=16)
+    under_expo_img_lr, over_expo_img_lr, under_expo_img, over_expo_img, use_bgu = check_input(under_expo_img, over_expo_img, max_l=1500)
+
+    global PYCUDA_FLAG
+    if not PYCUDA_FLAG and use_bgu:
+        print("No pycuda, do not run BGU.")
+        use_bgu = False
 
     ue = to_tensor(under_expo_img_lr).unsqueeze(dim=0).to("cuda")
     oe = to_tensor(over_expo_img_lr).unsqueeze(dim=0).to("cuda")
@@ -61,7 +72,7 @@ def infer(
     except Exception as e:
         num_inference_steps = 20
 
-    out = run_ultrafusion(ue, oe, ue_hr, oe_hr, use_bgu, 'test', flow_model=flow_model, pipe=ultrafusion_pipe, steps=num_inference_steps, consistent_start=None)
+    out = run_ultrafusion(ue, oe, ue_hr, oe_hr, use_bgu, 'test', flow_model=flow_model, pipe=ultrafusion_pipe, steps=num_inference_steps, consistent_start=None, test_bs=16)
     
     out = out.clamp(0, 1).squeeze()
     out_pil = to_pil(out)
