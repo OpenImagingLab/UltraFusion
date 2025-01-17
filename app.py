@@ -46,7 +46,7 @@ def infer(
     print(under_expo_img.size)
     print("reciving image")
     
-    under_expo_img_lr, over_expo_img_lr, under_expo_img, over_expo_img, use_bgu = check_input(under_expo_img, over_expo_img, max_l=1500)
+    under_expo_img_lr, over_expo_img_lr, under_expo_img, over_expo_img, use_bgu = check_input(under_expo_img, over_expo_img, max_l=1500, test_bs=16)
 
     ue = to_tensor(under_expo_img_lr).unsqueeze(dim=0).to("cuda")
     oe = to_tensor(over_expo_img_lr).unsqueeze(dim=0).to("cuda")
