@@ -6,16 +6,9 @@ import gradio as gr
 import numpy as np
 import random
 # import spaces #[uncomment to use ZeroGPU]
-# from diffusers import DiffusionPipeline
 import torch
 from torchvision.transforms import ToTensor, ToPILImage
-# import logging
-# logging.getLogger("huggingface_hub").setLevel(logging.CRITICAL)
 
-# model_name = "iimmortall/UltraFusion"
-# auth_token = os.getenv("ModelAccessToken")
-# from huggingface_hub import hf_hub_download, snapshot_download
-# model_folder = snapshot_download(repo_id=model_name, token=auth_token, local_dir="/home/user/app")
 base_path = '/home/xlab-app-center/UltraFusionModel'
 # download repo to the base_path directory using git
 print(os.system('pwd'))
@@ -52,14 +45,14 @@ def infer(
 ):
     print(under_expo_img.size)
     print("reciving image")
-    # print(under_expo_img.orig_name, over_expo_img.orig_name)
+    
+    under_expo_img_lr, over_expo_img_lr, under_expo_img, over_expo_img, use_bgu = check_input(under_expo_img, over_expo_img, max_l=1500)
 
-    # under_expo_img = under_expo_img.resize([1500, 1000])
-    # over_expo_img = over_expo_img.resize([1500, 1000])
-    under_expo_img, over_expo_img = check_input(under_expo_img, over_expo_img, max_l=1500)
+    ue = to_tensor(under_expo_img_lr).unsqueeze(dim=0).to("cuda")
+    oe = to_tensor(over_expo_img_lr).unsqueeze(dim=0).to("cuda")
+    ue_hr = to_tensor(under_expo_img).unsqueeze(dim=0).to("cuda")
+    oe_hr = to_tensor(over_expo_img).unsqueeze(dim=0).to("cuda")
 
-    ue = to_tensor(under_expo_img).unsqueeze(dim=0).to("cuda")
-    oe = to_tensor(over_expo_img).unsqueeze(dim=0).to("cuda")
     print("num_inference_steps:", num_inference_steps)
     try:
         if num_inference_steps is None:
@@ -68,9 +61,8 @@ def infer(
     except Exception as e:
         num_inference_steps = 20
 
-    out = run_ultrafusion(ue, oe, 'test', flow_model=flow_model, pipe=ultrafusion_pipe, 
-                          steps=num_inference_steps, consistent_start=None)
-
+    out = run_ultrafusion(ue, oe, ue_hr, oe_hr, use_bgu, 'test', flow_model=flow_model, pipe=ultrafusion_pipe, steps=num_inference_steps, consistent_start=None)
+    
     out = out.clamp(0, 1).squeeze()
     out_pil = to_pil(out)
 
