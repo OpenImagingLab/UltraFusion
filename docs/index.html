@@ -180,14 +180,94 @@
     <!--/ Abstract. -->
 
   <!-- Teaser video-->
-  <div class="columns is-centered has-text-centered">
+  <!-- local video -->
+  <!-- <div class="columns is-centered has-text-centered">
     <div class="column is-four-fifths">
       <h2 class="title is-3">Video</h2>
       <div class="publication-video">
         <iframe src="static/videos/video.mp4" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen="" height="30%"></iframe>
+        
       </div>
     </div>
-  </div>
+  </div> -->
+
+  <!-- youtube video -->
+  <!-- <div class="columns is-centered has-text-centered">
+    <div class="column is-four-fifths">
+      <h5 class="title is-3">Video</h5>
+      <div class="publication-video">
+        <iframe
+          src="https://www.youtube.com/embed/-VMV3MD1GIE"
+          title="YouTube video player"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen >
+        </iframe>
+      </div>
+    </div>
+  </div> -->
+
+<div id="video-container"></div>
+  <script>
+    
+    async function isWebsiteReachable(url) {
+        try {
+          // Send a request to the URL
+        console.log('Waiting ...')
+          const response = await fetch(url, {
+            method: 'HEAD', // Use HEAD to minimize data transfer (only headers are retrieved)
+            mode: 'no-cors', // Avoid CORS issues with third-party websites (may still block for some URLs)
+          signal: AbortSignal.timeout(1000)
+          });
+      
+          // Check if the response status is in the success range
+          if (response.ok || response.status === 0) {
+            return true;
+          } else {
+            return false;
+          }
+        } catch (error) {
+          return false;
+        }
+    }
+    isWebsiteReachable('https://www.youtube.com').then((reachable) => {
+      // Create video container div
+      const videoDiv = document.createElement('div');
+        videoDiv.classList.add('columns', 'is-centered', 'has-text-centered');
+        if (!reachable) {
+          console.log('YouTube is not reachable, showing local video.');
+          // If YouTube is not reachable, create and insert local video
+          videoDiv.innerHTML = `
+          <div class="column is-four-fifths">
+            <h2 class="title is-3">Video</h2>
+            <div class="publication-video">
+              <iframe src="static/videos/video.mp4" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen="" height="30%"></iframe>
+            </div>
+          </div>
+          `;
+        } else {
+          console.log('YouTube is reachable, showing YouTube video.');
+          // If YouTube is reachable, create and insert YouTube video iframe
+          videoDiv.innerHTML = `
+          <div class="column is-four-fifths">
+            <h5 class="title is-3">Video</h5>
+            <div class="publication-video">
+              <iframe
+                src="https://www.youtube.com/embed/-VMV3MD1GIE"
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"; height="30%"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen >
+              </iframe>
+            </div>
+          </div>
+        `;
+        }
+        document.getElementById('video-container').appendChild(videoDiv); 
+      });
+  </script>
 
     <!-- Main Idea. -->
     <div class="columns is-centered has-text-centered">
