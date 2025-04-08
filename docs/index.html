@@ -38,11 +38,103 @@
   <link rel="stylesheet" href="static/css/index.css">
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="static/jquery.min.js"></script>
+  <script type="text/javascript" src="static/jquery.ez-plus.js"></script>
   <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
   <script defer src="static/js/fontawesome.all.min.js"></script>
   <script src="static/js/bulma-carousel.min.js"></script>
   <script src="static/js/bulma-slider.min.js"></script>
   <script src="static/js/index.js"></script>
+  <style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+        background-color: #f5f5f5;
+    }
+
+    .header {
+        display: flex;
+        justify-content: center; /* Center-align the select menus */
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .header select {
+        margin: 0 10px; /* Add spacing between the dropdowns */
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .buttons {
+        display: flex;
+        flex-wrap: wrap; /* Allow wrapping of buttons */
+        justify-content: center; /* Center-align the buttons */
+        gap: 20px; /* Add spacing between buttons */
+        margin-top: 20px;
+    }
+
+    /* .buttons button { */
+        /* margin: 10px 5px; Add some spacing between buttons */
+        /* padding: 8px 15px; */
+        /* border: 1px solid #007bff; */
+        /* border-radius: 4px; */
+        /* background-color: #007bff; */
+        /* color: #fff; */
+        /* cursor: pointer; */
+        /* display: inline-block; */
+    /* } */
+
+    /* .buttons button.active {
+        background-color: #0056b3;
+    }
+
+    .buttons button:hover {
+        background-color: #0056b3;
+    } */
+
+    .button-wrapper {
+        text-align: center; /* Center-align each button and its label */
+    }
+
+    .button-wrapper img {
+        width: auto; /* Thumbnail width */
+        height: 80px; /* Thumbnail height */
+        border-radius: 8px;
+        border: 2px solid #ccc;
+        cursor: pointer;
+        transition: border-color 0.3s;
+    }
+
+    .button-wrapper img.active {
+        border-color: #007bff; /* Highlight active button */
+    }
+
+    .button-wrapper span {
+        display: block;
+        margin-top: 10px;
+        font-size: 14px;
+        color: #333;
+    }
+
+    .image-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+    .image-container img {
+        /* max-width: 'auto'; Ensures the image doesn’t exceed container width */
+        /* max-height: 572px; Limit the image height */
+        height: 572px; /* Maintain aspect ratio */
+        width: auto; /* Maintain aspect ratio */
+        border-radius: 8px;
+        border: 1px solid #ddd;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+  </style>
 </head>
 <body>
 
@@ -272,9 +364,11 @@
     <!-- Main Idea. -->
     <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths">
+        <br><br>
         <h2 class="title is-4">Overview of UltraFusion</h2>
           <p style="text-align: left;">We model the HDR imaging as a guided inpainting problem. We use the over exposed image as a reference, and inpainting the missing information in the highlight. Unlike the traditional inpainting, we use the information from under-exposed frame as soft guidance, so inpainted highlight is not completely generated, but stays consistent with under-exposed frame.</p>
-          <br><br>
+          <br>
+          <!-- <br><br> -->
           <!-- <strong style="color:#2f5faf;">We model the exposure fusion as a guided inpainting problem.</strong> -->
         <div class="content has-text-justified">
           <img id="teaser" src="static/images/UltraFusion.png" alt="Teaser Image" height="100%">
@@ -309,9 +403,9 @@
     <!-- Results. -->
     <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths">
-        <h2 class="title is-4">Visual Results</h2>
+        <h2 class="title is-4">Additional Applications</h2>
         <div class="content has-text-justified">
-          <figure style="text-align:center;">
+          <!-- <figure style="text-align:center;">
             <img id="ablation" src="static/images/compare_MEFB.png" alt="Ablation Image" width="200%">
             <figcaption style="font-size:0.9em; color:#555;">
               Visual results on static scenes.
@@ -337,19 +431,227 @@
             <figcaption style="font-size:0.9em; color:#555;">
               Visual results on another real-captured scene.
             </figcaption>
-          </figure>
-          <figure style="text-align:center;">
-            <img id="ablation" src="static/images/extension.png" alt="Ablation Image" height="100%">
+          </figure> -->
+          <!-- <figure style="text-align:center;">
+            <img id="ablation" src="static/images/extension.png" alt="Teaser Image" width="100%">
             <figcaption style="font-size:0.9em; color:#555;">
               Our UltraFusion can be extended to general image fusion.
             </figcaption>
-          </figure>
-
+          </figure> -->
+          <img id="teaser" src="static/images/extension.png" alt="Teaser Image" height="100%">
+          <figcaption style="font-size:0.9em; color:#555; text-align: center;">
+            Our UltraFusion can be extended to general image fusion.
+          </figcaption> 
           <p></p>
           <p></p>
         </div>
       </div>
     </div>
+
+    <h2 class="title is-4" style="text-align: center;">Visual Comparison</h2>
+    <div class="header">
+      <b>Dataset:</b>
+      <select id="categorySelect">
+          <option value="UltraFusion">UltraFusion</option>
+          <option value="RealHDRV">RealHDRV</option>
+          <option value="MEFB">MEFB</option>
+      </select>
+      <span style="display: inline-block; width: 40px;"></span>
+      <b>Scene:</b>
+      <select id="imageSelect">
+      </select>
+  </div>
+
+  <div class="image-container">
+      <img id="displayImage" src="UltraFusion/Ours/0004.jpg" alt="Comparison Image">
+  </div>
+  <div class="buttons">
+      <div class="button-wrapper">
+      <img id="l1Button" src="UltraFusion/input_ue/0004.jpg" alt="Under Exposure" width="100">
+      <span>Under Exposure</span>
+      </div>
+
+      <div class="button-wrapper">
+      <img id="l2Button" src="UltraFusion/input_oe/0004.jpg" alt="Over Exposure" width="100">
+      <span>Over Exposure</span>
+      </div>
+
+      <div class="button-wrapper">
+      <img id="DefusionButton" src="UltraFusion/Defusion/0004.jpg" alt="Defusion" width="100">
+      <span>Defusion</span>
+      </div>
+
+      <div class="button-wrapper">
+      <img id="SCTNetButton" src="UltraFusion/SCTNet/0004.jpg" alt="SCTNet" width="100">
+      <span>SCTNet</span>
+      </div>
+
+      <div class="button-wrapper">
+      <img id="HDRTransformerButton" src="UltraFusion/HDR-Transformer/0004.jpg" alt="HDRTransformer" width="100">
+      <span>HDR-Transformer</span>
+      </div>
+
+      <div class="button-wrapper">
+      <img id="HSDSMEFButton" src="UltraFusion/HSDS-MEF/0004.jpg" alt="HSDSMEF" width="100">
+      <span>HSDS-MEF</span>
+      </div>
+
+      <div class="button-wrapper">
+      <img id="OursButton" src="UltraFusion/Ours/0004.jpg" alt="Ours" width="100">
+      <span>UltraFusion (Ours)</span>
+      </div>
+      <!-- <button id="l1Button">Under Exposure</button> -->
+      <!-- <button id="l2Button">Over Exposure</button> -->
+      <!-- <button id="OursButton">Ours</button> -->
+      <!-- <button id="DefusionButton">Defusion</button> -->
+      <!-- <button id="HSDSMEFButton">HSDS-MEF</button> -->
+      <!-- <button id="HDRTransformerButton">HDR-Transformer</button> -->
+      <!-- <button id="SCTNetButton">SCTNet</button> -->
+  </div>
+  <script>
+      const buttons = document.querySelectorAll('.buttons img');
+      const displayImage = document.getElementById('displayImage');
+      const imageSelect = document.getElementById('imageSelect');
+      const categorySelect = document.getElementById('categorySelect');
+
+      // Simulating image loading based on button clicks
+      const datasets = {
+          RealHDRV: 'RealHDRV/',
+          UltraFusion: 'UltraFusion/',
+          MEFB: 'MEFB/',
+      }
+
+      const folderPaths = {
+          Ours: 'Ours/',
+          l1: 'input_ue/',
+          l2: 'input_oe/',
+          Defusion: 'Defusion/',
+          HSDSMEF: 'HSDS-MEF/',
+          HDRTransformer: 'HDR-Transformer/',
+          SCTNet: 'SCTNet/',
+      };
+
+      // Function to populate the imageSelect dropdown with options from 0001 to 0020
+      function populateImageSelect(n) {
+          imageSelect.innerHTML = '';
+          for (let i = 1; i <= n; i++) {
+              const value = i.toString().padStart(4, '0'); // Format number as '0001', '0002', etc.
+              const option = document.createElement('option');
+              option.value = value;
+              option.textContent = value;
+              imageSelect.appendChild(option);
+          }
+      }
+
+      // Function to get the currently active button
+      function getActiveButton() {
+          return document.querySelector('.buttons img.active')?.id.replace('Button', '') || 'l1';
+      }
+
+      // Function to update the image based on the current selection
+      function updateImage() {
+          const selectedDataset = datasets[categorySelect.value]; // Get the selected Dataset
+          const selectedImage = imageSelect.value; // Get the selected file name
+          const activeButton = getActiveButton(); // Get the active method
+          const folderPath = folderPaths[activeButton]; // Get the folder path for the active method
+          const imagePath = `${selectedDataset}${folderPath}${selectedImage}.jpg`; // Construct the image path
+          displayImage.src = imagePath; // Update the image source
+          // displayImage.setAttribute('data-zoom-image', imagePath); // Update the zoom image path
+          if (categorySelect.value != 'MEFB') {
+              $('#displayImage').ezPlus({
+                  cursor: 'inherit',
+                  lensOpacity: 0.25,
+                  zoomWindowPosition: 9,    
+                  zoomWindowHeight: 565,
+                  zoomWindowWidth: 400,
+                  // zoomWindowHeight: 10,
+                  // zoomWindowWidth: 10,
+                  borderSize: 3,
+                  easing: true,
+                  easingAmount: 8});
+              var ez = $('#displayImage').data('ezPlus');
+              ez.swaptheimage(displayImage.src,displayImage.src); 
+          } else {
+              $('#displayImage').ezPlus({
+                  cursor: 'inherit',
+                  lensOpacity: 0.25,
+                  zoomWindowPosition: 9,    
+                  zoomWindowHeight: 0,
+                  zoomWindowWidth: 0,
+                  // zoomWindowHeight: 10,
+                  // zoomWindowWidth: 10,
+                  borderSize: 0,
+                  easing: true,
+                  easingAmount: 8});
+              var ez = $('#displayImage').data('ezPlus');
+              // var action = 'hide'
+              // ez.showHideZoomContainer('hide');
+              // ez.showHideWindow('hide');
+              // ez.showHideTint('hide');
+              // ez.showHideLens('hide');
+              // ez.swaptheimage(displayImage.src,displayImage.src); 
+              // ez.destroy;
+          }
+      }
+
+      // Function to update button thumbnails based on the selected image
+      function updateThumbnails() {
+          const selectedDataset = datasets[categorySelect.value]; // Get the selected Dataset
+          const selectedImage = imageSelect.value; // Get the selected file name
+          buttons.forEach(button => {
+              const buttonId = button.id.replace('Button', ''); // Get the method name from the button ID
+              const thumbnailPath = `${selectedDataset}${folderPaths[buttonId]}${selectedImage}.jpg`; // Construct the thumbnail path
+              button.src = thumbnailPath; // Update the thumbnail source
+          });
+      }
+
+
+      // Add event listeners to buttons
+      buttons.forEach(button => {
+          button.addEventListener('click', () => {
+              // Remove active class from all buttons
+              buttons.forEach(btn => btn.classList.remove('active'));
+              
+              // Add active class to the clicked button
+              button.classList.add('active');
+              
+              // Update the image based on the active button and selected image
+              updateImage();
+          });
+      });
+
+      categorySelect.addEventListener('change', () => {
+          const selectedCategory = categorySelect.value;
+
+          if (selectedCategory === 'UltraFusion') {
+              populateImageSelect(20);
+          } else {
+              // Populate with 0011 to 0020
+              populateImageSelect(10);
+          }
+          updateImage(); // Update the image when selection changes
+          updateThumbnails();
+      });
+
+      // Add event listener to the ImageSelect dropdown
+      imageSelect.addEventListener('change', () => {
+          updateImage(); // Update the image when selection changes
+          updateThumbnails();
+      });
+
+      // Initialize the page with default settings
+      function initialize() {
+          populateImageSelect(20); // Populate the dropdown with options
+          document.getElementById('l2Button').classList.add('active'); // Default button
+          imageSelect.value = '0004'; // Set default selection
+          updateImage(); // Load default image
+      }
+      initialize();
+  </script>
+
+
+
+
     <!--/ Results. -->
 
   </div>
@@ -402,4 +704,5 @@
 
   </body>
   </html>
+
 
