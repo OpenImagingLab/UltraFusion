@@ -47,6 +47,7 @@
 - [ ] Release training codes.
 - [ ] Release inference codes and pre-trained model. 
 - [ ] Release UltraFusion benchmark and visual results.
+- [ ] Release more visual comparison in our [project page](https://openimaginglab.github.io/UltraFusion/)
 
 <!-- ## :bridge_at_night: Benchmark
 We capture 100 challenging real-world HDR scenes for performance evaluation. 
