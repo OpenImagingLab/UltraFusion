@@ -137,7 +137,7 @@ def build_demo():
 
     with gr.Blocks(css=css) as demo:
         with gr.Column(elem_id="col-container"):
-            gr.Markdown("""<h1 style="text-align: center; font-size: 32px;"><b>浦像•超级HDR📸✨</b></h1>""")
+            gr.Markdown("""<h1 style="text-align: center; font-size: 32px;"><b>书生•浦像超高动态成像算法📸✨</b></h1>""")
             gr.Markdown("""<h1 style="text-align: center; font-size: 24px;"><b>该如何使用它呢？</b></h1>""")
             with gr.Row():
                 gr.Image("ui/ch-short.png", width=IMG_W//3, show_label=False, interactive=False, show_download_button=False)
