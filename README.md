@@ -28,8 +28,8 @@
     <br>
     <div align="center">
     <a href="https://arxiv.org/abs/2501.11515"><img src='https://img.shields.io/badge/arXiv-UltraFusion-red' alt='Paper PDF'></a>
-    <a href='https://xavierchen34.github.io/MimicBrush-Page/'><img src='https://img.shields.io/badge/Project_Page-UltraFusion-blue' alt='Project Page'></a>
-    <ef='https://huggingface.co/spaces/xichenhku/MimicBrush'><img src='https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Spaces-yellow'></a>
+    <a href='https://openimaginglab.github.io/UltraFusion/'><img src='https://img.shields.io/badge/Project_Page-UltraFusion-blue' alt='Project Page'></a>
+    <a href='https://huggingface.co/spaces/iimmortall/UltraFusion'><img src='https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Spaces-yellow'></a>
     </div>
   </p>
 </p>
