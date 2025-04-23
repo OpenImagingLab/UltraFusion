@@ -1,0 +1,123 @@
+model:
+  fidelity_encoder:
+    target: model.V4_CA.vae.FidelityEncoder
+    params:
+      double_z: true
+      z_channels: 4
+      resolution: 256
+      in_channels: 1
+      out_ch: 3
+      ch: 128
+      ch_mult:
+      - 1
+      - 2
+      - 4
+      - 4
+      num_res_blocks: 2
+      attn_resolutions: []
+      dropout: 0.0
+  cldm:
+    target: model.V4_CA.cldm.ControlLDM
+    params:
+      latent_scale_factor: 0.18215
+      unet_cfg:
+        use_checkpoint: True
+        image_size: 32 # unused
+        in_channels: 4
+        out_channels: 4
+        model_channels: 320
+        attention_resolutions: [ 4, 2, 1 ]
+        num_res_blocks: 2
+        channel_mult: [ 1, 2, 4, 4 ]
+        num_head_channels: 64 # need to fix for flash-attn
+        use_spatial_transformer: True
+        use_linear_in_transformer: True
+        transformer_depth: 1
+        context_dim: 1024
+        legacy: False
+      vae_cfg:
+        embed_dim: 4
+        ddconfig:
+          double_z: true
+          z_channels: 4
+          resolution: 256
+          in_channels: 3
+          out_ch: 3
+          ch: 128
+          ch_mult:
+          - 1
+          - 2
+          - 4
+          - 4
+          num_res_blocks: 2
+          attn_resolutions: []
+          dropout: 0.0
+      clip_cfg:
+        embed_dim: 1024
+        vision_cfg:
+          image_size: 224
+          layers: 32
+          width: 1280
+          head_width: 80
+          patch_size: 14
+        text_cfg:
+          context_length: 77
+          vocab_size: 49408
+          width: 1024
+          heads: 16
+          layers: 24
+        layer: "penultimate"
+      controlnet_cfg:
+        use_checkpoint: True
+        image_size: 32 # unused
+        in_channels: 4
+        hint_channels: 4
+        model_channels: 320
+        attention_resolutions: [ 4, 2, 1 ]
+        num_res_blocks: 2
+        channel_mult: [ 1, 2, 4, 4 ]
+        num_head_channels: 64 # need to fix for flash-attn
+        use_spatial_transformer: True
+        use_linear_in_transformer: True
+        transformer_depth: 1
+        context_dim: 1024
+        legacy: False
+
+  diffusion:
+    target: model.V4_CA.gaussian_diffusion.Diffusion
+    params:
+      linear_start: 0.00085
+      linear_end: 0.0120
+      timesteps: 1000
+
+dataset:
+  train1:
+    target: dataset.mef_dataset.MEFDatasetV5
+    params:
+      # training file list path
+      img_dir: /dev/shm/SICE/Dataset_Part1_2expo_train
+      motion_img_dir: /ailab/group/pjlab-sail/chenzixuan/vimeo_septuplet/sequences
+  train2:
+    target: dataset.mef_dataset.MEFDatasetV5
+    params:
+      # training file list path
+      img_dir: /dev/shm/SICE/Dataset_Part2_2expo
+      motion_img_dir: /ailab/group/pjlab-sail/chenzixuan/vimeo_septuplet/sequences
+
+train:
+  # pretrained sd v2.1 path
+  sd_path: /ailab/user/chenzixuan/Research/pretrained_models/SDv2.1/v2-1_512-ema-pruned.ckpt
+  # experiment directory path
+  exp_dir: ./exps/sd_motion_V4_CA_8gpus
+  learning_rate: 1e-4
+  # ImageNet 1k (1.3M images)
+  # batch size = 192, lr = 1e-4, total training steps = 25k
+  # Our filtered laion2b-en (15M images)
+  # batch size = 256, lr = 1e-4 (first 30k), 1e-5 (next 50k), total training steps = 80k
+  batch_size: 4
+  num_workers: 8 
+  train_steps: 1000000
+  log_every: 50
+  ckpt_every: 4000
+  image_every: 500
+  resume: ~
