@@ -37,7 +37,7 @@
 ![teaser_img](assets/teaser.png)
 
 ## :mega: News
-<!-- - **2024.4.5**: Our benchmark and results are released. -->
+- **2024.4.23**: Inference codes, benchmark and results are released.
 - **2024.4.5**: Our UltraFusion is selected to be presented as a :sparkles:***highlight***:sparkles: in CVPR 2025.
 - **2025.2.27**: Accepeted by ***CVPR 2025*** :tada::tada::tada:.
 - **2025.1.21**: Feel free to try online demos at <a href="https://huggingface.co/spaces/iimmortall/UltraFusion">Hugging Face</a> and <a href="https://openxlab.org.cn/apps/detail/OpenImagingLab/UltraFusion">OpenXLab</a> :blush:.
@@ -45,14 +45,48 @@
 
 ## :memo: ToDo List
 - [ ] Release training codes.
-- [ ] Release inference codes and pre-trained model. 
-- [ ] Release UltraFusion benchmark and visual results.
-- [ ] Release more visual comparison in our [project page](https://openimaginglab.github.io/UltraFusion/)
+- [x] Release inference codes and pre-trained model. 
+- [x] Release UltraFusion benchmark and visual results.
+- [x] Release more visual comparison in our [project page](https://openimaginglab.github.io/UltraFusion/)
 
-<!-- ## :bridge_at_night: Benchmark
+## :bridge_at_night: Benchmark
 We capture 100 challenging real-world HDR scenes for performance evaluation. 
-Our benchmark and results (include competing methods) are availble at [Google Drive]() and [Baidu Disk](). 
-Moreover, we also provide results of our method and the comparison methods on [RealHDV](https://github.com/yungsyu99/Real-HDRV) and [MEFB](https://github.com/xingchenzhang/MEFB). -->
+Our benchmark and results (include competing methods) are availble at [Google Drive](https://drive.google.com/drive/folders/18icr4A_0qGvwqehPhxH29hqJYO8HS6bi?usp=sharing) and [Baidu Disk](). 
+Moreover, we also provide results of our method and the comparison methods on [RealHDV](https://github.com/yungsyu99/Real-HDRV) and [MEFB](https://github.com/xingchenzhang/MEFB).
+
+> *<sub>Note: The HDR reconstruction methods perform poorly in some scenes because we follow their setup to retrain 2-exposure version, while the training set they used only provide ground truth for the middle exposure, limiting the dynamic range. We believe that using training data with higher dynamic range can improve performance.</sub>*
+
+## Quick Start
+**Installation**
+```shell
+# clone this repo
+git clone https://github.com/OpenImagingLab/UltraFusion.git
+cd UltraFusion
+
+# create environment
+conda create -n UltraFusion python=3.10
+conda activate UltraFusion
+pip install -r requirements.txt
+```
+**Prepare Data and Pre-trained Model**
+
+Download [raft-sintel.pth](https://drive.google.com/drive/folders/1sWDsfuZ3Up38EUQt7-JDTT1HcGHuJgvT?usp=sharing), [v2-1_512-ema-pruned.ckpt](https://huggingface.co/stabilityai/stable-diffusion-2-1-base/blob/main/v2-1_512-ema-pruned.ckpt), [fcb.pt](https://huggingface.co/zxchen00/UltraFusion/blob/main/fcb.pt) and [ultrafusion.pt](https://huggingface.co/zxchen00/UltraFusion/blob/main/ultrafusion.pt), and put them in ```ckpts``` folder. Download three benchmarks ([Google Drive](https://drive.google.com/drive/folders/18icr4A_0qGvwqehPhxH29hqJYO8HS6bi?usp=sharing) or [Baidu Disk]()) and put them in ```data``` folder.
+
+**Inference**
+
+Run the following scripts for inference.
+```shell
+# UltraFusion Benchmark
+python inference.py --dataset UltraFusion --output results --tiled --tile_size 512 --tile_stride 256 --prealign --save_all
+# RealHDRV
+python inference.py --dataset RealHDRV --output results --tiled --tile_size 512 --tile_stride 256 --prealign --save_all
+# MEFB (cancel pre-alignment for static scenes)
+python inference.py --dataset MEFB --output results --tiled --tile_size 512 --tile_stride 256 --save_all
+```
+You can also use ```val_nriqa.py``` for evaluation.
+
+
+
 
 ## Acknowledgements
 This project is developped on the codebase of [DiffBIR](https://github.com/XPixelGroup/DiffBIR). We appreciate their great work! 
