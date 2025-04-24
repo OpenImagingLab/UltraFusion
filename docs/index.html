@@ -145,6 +145,9 @@
         <div class="columns is-centered">
           <div class="column has-text-centered">
             <h1 class="title is-1 publication-title">UltraFusion: Ultra High Dynamic Imaging using Exposure Fusion</h1>
+            <div class="is-size-4">
+            <b><i>CVPR 2025 Highlight</i></b>
+            </div>
             <!-- <h3 class="title is-2 publication-conf", style="color: grey;">arXiv 2024</h3> -->
             <div class="is-size-5 publication-authors">
               <!-- Paper authors -->
@@ -371,7 +374,7 @@
           <!-- <br><br> -->
           <!-- <strong style="color:#2f5faf;">We model the exposure fusion as a guided inpainting problem.</strong> -->
         <div class="content has-text-justified">
-          <img id="teaser" src="static/images/UltraFusion.png" alt="Teaser Image" height="100%">
+          <img id="teaser" src="static/images/Backbone.png" alt="Teaser Image" height="100%">
           <figcaption style="font-size:0.9em; color:#555; text-align: center;">
             Overview of our UltraFusion framework.
           </figcaption>
@@ -507,146 +510,142 @@
       <!-- <button id="HSDSMEFButton">HSDS-MEF</button> -->
       <!-- <button id="HDRTransformerButton">HDR-Transformer</button> -->
       <!-- <button id="SCTNetButton">SCTNet</button> -->
+      <p style="align-content: center;">
+        You can press <i><b>1, 2, 3, 4, 5, 6, 7</b></i> on keyboard to switch different results. 
+        Results are compressed for quick display, please refer to <a href="https://drive.google.com/drive/folders/18icr4A_0qGvwqehPhxH29hqJYO8HS6bi?usp=drive_link" target="_blank">Google Drive</a> for original results.
+      </p>
   </div>
   <script>
-      const buttons = document.querySelectorAll('.buttons img');
-      const displayImage = document.getElementById('displayImage');
-      const imageSelect = document.getElementById('imageSelect');
-      const categorySelect = document.getElementById('categorySelect');
+    const buttons = document.querySelectorAll('.buttons img');
+    const displayImage = document.getElementById('displayImage');
+    const imageSelect = document.getElementById('imageSelect');
+    const categorySelect = document.getElementById('categorySelect');
 
-      // Simulating image loading based on button clicks
-      const datasets = {
-          RealHDRV: 'RealHDRV/',
-          UltraFusion: 'UltraFusion/',
-          MEFB: 'MEFB/',
-      }
+    const datasets = {
+        RealHDRV: 'RealHDRV/',
+        UltraFusion: 'UltraFusion/',
+        MEFB: 'MEFB/',
+    };
 
-      const folderPaths = {
-          Ours: 'Ours/',
-          l1: 'input_ue/',
-          l2: 'input_oe/',
-          Defusion: 'Defusion/',
-          HSDSMEF: 'HSDS-MEF/',
-          HDRTransformer: 'HDR-Transformer/',
-          SCTNet: 'SCTNet/',
-      };
+    const folderPaths = {
+        Ours: 'Ours/',
+        l1: 'input_ue/',
+        l2: 'input_oe/',
+        Defusion: 'Defusion/',
+        HSDSMEF: 'HSDS-MEF/',
+        HDRTransformer: 'HDR-Transformer/',
+        SCTNet: 'SCTNet/',
+    };
 
-      // Function to populate the imageSelect dropdown with options from 0001 to 0020
-      function populateImageSelect(n) {
-          imageSelect.innerHTML = '';
-          for (let i = 1; i <= n; i++) {
-              const value = i.toString().padStart(4, '0'); // Format number as '0001', '0002', etc.
-              const option = document.createElement('option');
-              option.value = value;
-              option.textContent = value;
-              imageSelect.appendChild(option);
-          }
-      }
+    function populateImageSelect(n) {
+        imageSelect.innerHTML = '';
+        for (let i = 1; i <= n; i++) {
+            const value = i.toString().padStart(4, '0');
+            const option = document.createElement('option');
+            option.value = value;
+            option.textContent = value;
+            imageSelect.appendChild(option);
+        }
+    }
 
-      // Function to get the currently active button
-      function getActiveButton() {
-          return document.querySelector('.buttons img.active')?.id.replace('Button', '') || 'l1';
-      }
+    function getActiveButton() {
+        return document.querySelector('.buttons img.active')?.id.replace('Button', '') || 'l1';
+    }
 
-      // Function to update the image based on the current selection
-      function updateImage() {
-          const selectedDataset = datasets[categorySelect.value]; // Get the selected Dataset
-          const selectedImage = imageSelect.value; // Get the selected file name
-          const activeButton = getActiveButton(); // Get the active method
-          const folderPath = folderPaths[activeButton]; // Get the folder path for the active method
-          const imagePath = `${selectedDataset}${folderPath}${selectedImage}.jpg`; // Construct the image path
-          displayImage.src = imagePath; // Update the image source
-          // displayImage.setAttribute('data-zoom-image', imagePath); // Update the zoom image path
-          if (categorySelect.value != 'MEFB') {
-              $('#displayImage').ezPlus({
-                  cursor: 'inherit',
-                  lensOpacity: 0.25,
-                  zoomWindowPosition: 9,    
-                  zoomWindowHeight: 565,
-                  zoomWindowWidth: 400,
-                  // zoomWindowHeight: 10,
-                  // zoomWindowWidth: 10,
-                  borderSize: 3,
-                  easing: true,
-                  easingAmount: 8});
-              var ez = $('#displayImage').data('ezPlus');
-              ez.swaptheimage(displayImage.src,displayImage.src); 
-          } else {
-              $('#displayImage').ezPlus({
-                  cursor: 'inherit',
-                  lensOpacity: 0.25,
-                  zoomWindowPosition: 9,    
-                  zoomWindowHeight: 0,
-                  zoomWindowWidth: 0,
-                  // zoomWindowHeight: 10,
-                  // zoomWindowWidth: 10,
-                  borderSize: 0,
-                  easing: true,
-                  easingAmount: 8});
-              var ez = $('#displayImage').data('ezPlus');
-              // var action = 'hide'
-              // ez.showHideZoomContainer('hide');
-              // ez.showHideWindow('hide');
-              // ez.showHideTint('hide');
-              // ez.showHideLens('hide');
-              // ez.swaptheimage(displayImage.src,displayImage.src); 
-              // ez.destroy;
-          }
-      }
+    function updateImage() {
+        const selectedDataset = datasets[categorySelect.value];
+        const selectedImage = imageSelect.value;
+        const activeButton = getActiveButton();
+        const folderPath = folderPaths[activeButton];
+        const imagePath = `${selectedDataset}${folderPath}${selectedImage}.jpg`;
 
-      // Function to update button thumbnails based on the selected image
-      function updateThumbnails() {
-          const selectedDataset = datasets[categorySelect.value]; // Get the selected Dataset
-          const selectedImage = imageSelect.value; // Get the selected file name
-          buttons.forEach(button => {
-              const buttonId = button.id.replace('Button', ''); // Get the method name from the button ID
-              const thumbnailPath = `${selectedDataset}${folderPaths[buttonId]}${selectedImage}.jpg`; // Construct the thumbnail path
-              button.src = thumbnailPath; // Update the thumbnail source
-          });
-      }
+        displayImage.src = imagePath;
 
+        const ez = $('#displayImage').data('ezPlus');
+        if (ez) {
+            if (categorySelect.value === 'MEFB') {
+                ez.closeAll(); // 或 ez.swaptheimage('', ''); 隐藏 zoom
+            } else {
+                ez.swaptheimage(imagePath, imagePath);
+            }
+        }
+    }
 
-      // Add event listeners to buttons
-      buttons.forEach(button => {
-          button.addEventListener('click', () => {
-              // Remove active class from all buttons
-              buttons.forEach(btn => btn.classList.remove('active'));
-              
-              // Add active class to the clicked button
-              button.classList.add('active');
-              
-              // Update the image based on the active button and selected image
-              updateImage();
-          });
-      });
+    function updateThumbnails() {
+        const selectedDataset = datasets[categorySelect.value];
+        const selectedImage = imageSelect.value;
+        buttons.forEach(button => {
+            const buttonId = button.id.replace('Button', '');
+            const thumbnailPath = `${selectedDataset}${folderPaths[buttonId]}${selectedImage}.jpg`;
+            button.src = thumbnailPath;
+        });
+    }
 
-      categorySelect.addEventListener('change', () => {
-          const selectedCategory = categorySelect.value;
+    buttons.forEach(button => {
+        button.addEventListener('click', () => {
+            buttons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+            updateImage();
+        });
+    });
 
-          if (selectedCategory === 'UltraFusion') {
-              populateImageSelect(20);
-          } else {
-              // Populate with 0011 to 0020
-              populateImageSelect(10);
-          }
-          updateImage(); // Update the image when selection changes
-          updateThumbnails();
-      });
+    categorySelect.addEventListener('change', () => {
+        const selectedCategory = categorySelect.value;
+        if (selectedCategory === 'UltraFusion') {
+            populateImageSelect(20);
+        } else {
+            populateImageSelect(10);
+        }
+        updateImage();
+        updateThumbnails();
+    });
 
-      // Add event listener to the ImageSelect dropdown
-      imageSelect.addEventListener('change', () => {
-          updateImage(); // Update the image when selection changes
-          updateThumbnails();
-      });
+    imageSelect.addEventListener('change', () => {
+        updateImage();
+        updateThumbnails();
+    });
 
-      // Initialize the page with default settings
-      function initialize() {
-          populateImageSelect(20); // Populate the dropdown with options
-          document.getElementById('l2Button').classList.add('active'); // Default button
-          imageSelect.value = '0004'; // Set default selection
-          updateImage(); // Load default image
-      }
-      initialize();
+    function initialize() {
+        populateImageSelect(20);
+        document.getElementById('l2Button').classList.add('active');
+        imageSelect.value = '0004';
+        updateImage();
+
+        // 初始化 zoom 插件（只做一次）
+        $('#displayImage').ezPlus({
+            cursor: 'inherit',
+            lensOpacity: 0.25,
+            zoomWindowPosition: 9,
+            zoomWindowHeight: 565,
+            zoomWindowWidth: 400,
+            borderSize: 3,
+            easing: true,
+            easingAmount: 8
+        });
+    }
+
+    // 数字键快捷键绑定
+    document.addEventListener('keydown', function(event) {
+        const key = event.key;
+        const keyToButtonId = {
+            '1': 'l1Button',
+            '2': 'l2Button',
+            '3': 'DefusionButton',
+            '4': 'SCTNetButton',
+            '5': 'HDRTransformerButton',
+            '6': 'HSDSMEFButton',
+            '7': 'OursButton'
+        };
+
+        if (key in keyToButtonId) {
+            const targetButton = document.getElementById(keyToButtonId[key]);
+            if (targetButton) {
+                targetButton.click();
+            }
+        }
+    });
+
+    initialize();
   </script>
 
 
