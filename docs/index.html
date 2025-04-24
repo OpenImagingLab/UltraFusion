@@ -564,7 +564,9 @@
         const ez = $('#displayImage').data('ezPlus');
         if (ez) {
             if (categorySelect.value === 'MEFB') {
-                ez.closeAll(); // 或 ez.swaptheimage('', ''); 隐藏 zoom
+                // ez.closeAll(); // 或 ez.swaptheimage('', ''); 隐藏 zoom
+                // ez.swaptheimage('', '')
+                ez.swaptheimage(imagePath, imagePath);
             } else {
                 ez.swaptheimage(imagePath, imagePath);
             }
