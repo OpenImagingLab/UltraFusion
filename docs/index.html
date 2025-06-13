@@ -201,15 +201,12 @@
                       </span>
                       <!-- Dataset Link. -->
                       
-                      <span class="link-block">
+                      <!-- <span class="link-block">
                         <a href="https://openxlab.org.cn/apps/detail/OpenImagingLab/UltraFusion"
                            class="external-link button is-normal is-rounded is-dark">
-                          <!-- <span class="icon">
-                              <i class="far fa-images"></i>
-                          </span> -->
                           <span>OpenXLab Demo</span>
                           </a>
-                      </span>
+                      </span> -->
 
                       <span class="link-block">
                         <a href="https://huggingface.co/spaces/iimmortall/UltraFusion"
@@ -344,12 +341,13 @@
         } else {
           console.log('YouTube is reachable, showing YouTube video.');
           // If YouTube is reachable, create and insert YouTube video iframe
+          // src="https://www.youtube.com/embed/-VMV3MD1GIE"
           videoDiv.innerHTML = `
           <div class="column is-four-fifths">
             <h5 class="title is-3">Video</h5>
             <div class="publication-video">
               <iframe
-                src="https://www.youtube.com/embed/-VMV3MD1GIE"
+                src="https://www.youtube.com/embed/1WqPPe3iq3Q"
                 title="YouTube video player"
                 frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"; height="30%"
@@ -402,6 +400,45 @@
       </div>
     </div>
     <!--/ Main Idea. -->
+
+    <!-- Benchmark -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <!-- <br><br> -->
+        <h2 class="title is-4">UltraFusion Benchmark (RealHDR100)</h2>
+          <p style="text-align: left;">We capture 100 challenging real-world HDR scenes for performance evaluation, including diverse motion patterns, scene types and capture devices. Our benchmark and corresponding results are available <a href="https://drive.google.com/drive/folders/1rjNlBMRrk2nrXRPMFMJ2T8Ac5k_BM8nC">here</a></p>.
+          <br>
+          <!-- <br><br> -->
+          <!-- <strong style="color:#2f5faf;">We model the exposure fusion as a guided inpainting problem.</strong> -->
+        <div class="content has-text-justified">
+          <img id="teaser" src="static/images/benchmark.png" alt="Teaser Image" height="100%">
+          <figcaption style="font-size:0.9em; color:#555; text-align: center;">
+            Samples of UltraFusion Benchmark (RealHDR100).
+          </figcaption>
+          <!-- <ul>
+            <li> Our method utilize event camera (<strong>temporally dense, ~140dB</strong>) and propose the explict 
+              event-assisted alignment module to align LDRs with extreme exposure differences. 
+              Also the proposed alignment module is finetuned using real-world interpolation
+              datasets, which are easier to acquire and widely available, to brige the gap between simulated
+              and real-world events </li>
+            <li> We propose a diffusion-based fusion module to merge aligned LDR images with significant 
+              exposure differences and generate HDR images. By leveraging a pre-trained latent stable 
+              diffusion model as an image prior, our fusion module mitigates the effects of alignment errors and occlusion boundaries, 
+              thereby achieving artifact-free HDR results. </li>
+          </ul> -->
+          <!-- <figure style="text-align:center;">
+            <img id="ablation" src="static/images/ablation_v8.jpg" alt="Ablation Image" height="100%">
+            <figcaption style="font-size:0.9em; color:#555;">
+                Ablation study on fusion and alignment modules by comparison of different configurations.
+            </figcaption>
+          </figure> -->
+
+          <p></p>
+          <p></p>
+        </div>
+      </div>
+    </div>
+    <!-- Benchmark -->
 
     <!-- Results. -->
     <div class="columns is-centered has-text-centered">
