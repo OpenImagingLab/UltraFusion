@@ -49,7 +49,7 @@
 - [x] Release UltraFusion benchmark and visual results.
 - [x] Release more visual comparison in our [project page](https://openimaginglab.github.io/UltraFusion/)
 
-## :bridge_at_night: UltraFusion Benchmark (RealHDR100)
+## :bridge_at_night: UltraFusion Benchmark (UltraFusion100)
 We capture 100 challenging real-world HDR scenes for performance evaluation. 
 Our benchmark (RealHDR100) and results (include competing methods) are availble at [Google Drive](https://drive.google.com/drive/folders/18icr4A_0qGvwqehPhxH29hqJYO8HS6bi?usp=sharing) and [Baidu Disk](). 
 Moreover, we also provide results of our method and the comparison methods on [RealHDV](https://github.com/yungsyu99/Real-HDRV) and [MEFB](https://github.com/xingchenzhang/MEFB).
