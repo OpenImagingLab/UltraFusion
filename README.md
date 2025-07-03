@@ -94,10 +94,12 @@ This project is developped on the codebase of [DiffBIR](https://github.com/XPixe
 ## :love_you_gesture: Citation
 If you find our paper and repo are helpful for your research, please consider citing:
 ```BibTeX
-@article{chen2025ultrafusion,
-  title={UltraFusion: Ultra High Dynamic Imaging using Exposure Fusion},
-  author={Chen, Zixuan and Wang, Yujin and Cai, Xin and You, Zhiyuan and Lu, Zheming and Zhang, Fan and Guo, Shi and Xue, Tianfan},
-  journal={arXiv preprint arXiv:2501.11515},
-  year={2025}
+@InProceedings{Chen_2025_CVPR,
+    author    = {Chen, Zixuan and Wang, Yujin and Cai, Xin and You, Zhiyuan and Lu, Zheming and Zhang, Fan and Guo, Shi and Xue, Tianfan},
+    title     = {UltraFusion: Ultra High Dynamic Imaging using Exposure Fusion},
+    booktitle = {Proceedings of the Computer Vision and Pattern Recognition Conference (CVPR)},
+    month     = {June},
+    year      = {2025},
+    pages     = {16111-16121}
 }
 ```
