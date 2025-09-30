@@ -178,12 +178,12 @@ class ControlLDM(nn.Module):
         return image
 
 
-    def prepare_condition(self, lq2: torch.Tensor, lq1_mscn_norm: torch.Tensor, lq1_color: torch.Tensor, txt: List[str]) -> Dict[str, torch.Tensor]:
+    def prepare_condition(self, lq2: torch.Tensor, lq1_struct: torch.Tensor, lq1_color: torch.Tensor, txt: List[str]) -> Dict[str, torch.Tensor]:
         # Note the lq_vis should be normalized to [-1, 1] and lq_ifr normalized to [0, 1]!!!
         return dict(
             c_txt=self.clip.encode(txt),
             c_lq2=self.vae_encode(lq2, sample=False),
-            c_lq1_mscn_norm=lq1_mscn_norm,
+            c_lq1_mscn_norm=lq1_struct,
             c_lq1_color=lq1_color
         )
     
