@@ -92,23 +92,23 @@ model:
 
 dataset:
   train1:
-    target: dataset.mef_dataset.MEFDatasetV5
+    target: dataset.mef_dataset.MEFDataset
     params:
       # training file list path
-      img_dir: /dev/shm/SICE/Dataset_Part1_2expo_train
-      motion_img_dir: /ailab/group/pjlab-sail/chenzixuan/vimeo_septuplet/sequences
+      img_dir: ./data/Dataset_Part1_2expo_train
+      motion_img_dir: ./data/Vimeo_mask
   train2:
-    target: dataset.mef_dataset.MEFDatasetV5
+    target: dataset.mef_dataset.MEFDataset
     params:
       # training file list path
-      img_dir: /dev/shm/SICE/Dataset_Part2_2expo
-      motion_img_dir: /ailab/group/pjlab-sail/chenzixuan/vimeo_septuplet/sequences
+      img_dir: ./data/Dataset_Part2_2expo
+      motion_img_dir: ./data/Vimeo_mask
 
 train:
   # pretrained sd v2.1 path
-  sd_path: /ailab/user/chenzixuan/Research/pretrained_models/SDv2.1/v2-1_512-ema-pruned.ckpt
+  sd_path: ./ckpts/v2-1_512-ema-pruned.ckpt
   # experiment directory path
-  exp_dir: ./exps/sd_motion_V4_CA_8gpus
+  exp_dir: ./exps/UltraFusion
   learning_rate: 1e-4
   # ImageNet 1k (1.3M images)
   # batch size = 192, lr = 1e-4, total training steps = 25k

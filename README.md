@@ -41,10 +41,10 @@
 - **2024.4.5**: Our UltraFusion is selected to be presented as a :sparkles:***highlight***:sparkles: in CVPR 2025.
 - **2025.2.27**: Accepeted by ***CVPR 2025*** :tada::tada::tada:.
 - **2025.1.21**: Feel free to try online demos at <a href="https://huggingface.co/spaces/iimmortall/UltraFusion">Hugging Face</a> and <a href="https://openxlab.org.cn/apps/detail/OpenImagingLab/UltraFusion">OpenXLab</a> :blush:.
-
+- **2025.9.30**: Training code is released (sorry for my delay :disappointed:).
 
 ## :memo: ToDo List
-- [ ] Release training codes.
+- [x] Release training codes.
 - [x] Release inference codes and pre-trained model. 
 - [x] Release UltraFusion benchmark and visual results.
 - [x] Release more visual comparison in our [project page](https://openimaginglab.github.io/UltraFusion/)
@@ -68,7 +68,7 @@ conda create -n UltraFusion python=3.10
 conda activate UltraFusion
 pip install -r requirements.txt
 ```
-**Prepare Data and Pre-trained Model**
+**Prepare Test Data and Pre-trained Model**
 
 Download [raft-sintel.pth](https://drive.google.com/drive/folders/1sWDsfuZ3Up38EUQt7-JDTT1HcGHuJgvT?usp=sharing), [v2-1_512-ema-pruned.ckpt](https://drive.google.com/file/d/1IFFqrIoRVVtSE9UxWDeMB2rfOa2ox-4h/view?usp=drive_link), [fcb.pt](https://huggingface.co/zxchen00/UltraFusion/blob/main/fcb.pt) and [ultrafusion.pt](https://huggingface.co/zxchen00/UltraFusion/blob/main/ultrafusion.pt), and put them in ```ckpts``` folder. Download three benchmarks ([Google Drive](https://drive.google.com/drive/folders/18icr4A_0qGvwqehPhxH29hqJYO8HS6bi?usp=sharing) or [Baidu Disk]()) and put them in ```data``` folder.
 
@@ -85,6 +85,19 @@ python inference.py --dataset MEFB --output results --tiled --tile_size 512 --ti
 ```
 You can also use ```val_nriqa.py``` for evaluation.
 
+## Training
+
+**Prepare Training Data**
+
+Download [SICE dataset](https://drive.google.com/file/d/1AfRZ3ymcMwUO644cCWQEo36_ypWINxlT/view?usp=sharing) and our [generated occlusion masks](https://drive.google.com/file/d/1sUtmCY-SLFYvpmnQQy150HjyOka3ymoW/view?usp=sharing), and put them in ```data``` folder. 
+
+**Start Training**
+
+Run the following scripts for training.
+```
+accelerate launch train.py --config configs/ultrafusion.yaml
+```
+The checkpoints will be saved in ```exps/UltraFusion``` folder.
 
 
 
